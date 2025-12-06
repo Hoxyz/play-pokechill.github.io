@@ -10,7 +10,7 @@ document.getElementById("settings-theme").addEventListener("change", e => {
 });
 
 
-saved.version = 0.1
+saved.version = undefined
 
 function updateGameVersion() {
 
@@ -19,7 +19,7 @@ function updateGameVersion() {
     saved.tutorialStep = "intro"
   }
 
-  saved.version = 0.3
+  saved.version = 0.4
   document.getElementById(`game-version`).innerHTML = `v${saved.version}`
 
 }
@@ -360,17 +360,22 @@ guide.inspecting = {
 
 guide.stats = {
   name: `Battle: Stats`,
-  description: function() { return `Each species of Pokémon share the same base stats that determine the actual stats of a Pokémon at a given level.<br><br>Stats determine how much damage they deal and receive ( see Battle: Moves).<br><br>Individual Values, or IV's, multiply base stats, and can be increased by getting multiple copies of Pokemon`}
+  description: function() { return `Each species of Pokémon share the same base stats that determine the actual stats of a Pokémon at a given level<br><br>Stats determine how much damage they deal and receive ( see Battle: Moves). The speed stat determines how fast a Pokemon executes a move<br><br>Individual Values, or IV's, multiply base stats, and can be increased by getting multiple copies of Pokemon`}
+}
+
+guide.experience = {
+  name: `Battle: Experience`,
+  description: function() { return `Pokemon gain experience by defeating foes, and share a portion of it among the team. This will also be the case even if the team Pokemon are defeated<br><br>Experience gain is proportional to the level difference. A level difference of +-5 levels will net the same amount, while more than 5 levels of difference will greatly increase the amount received.<br><br>A Pokemon 10 levels higher will not yield any experience`}
 }
 
 guide.moves = {
   name: `Battle: Moves`,
-  description: function() { return `Moves are learnt every 7 levels. Moves can be switched by right click/long press on a team pokemon.<br><br>Damaging moves are divided into physical and special moves.<br>The category of the move determines whether the move's damage depends on the user's Attack or Special Attack stat and the target's Defense or Special Defense`}
+  description: function() { return `Moves are learnt every 7 levels. Moves can be switched by right click/long press on a team pokemon<br><br>Damaging moves are divided into physical and special moves<br>The category of the move determines whether the move's damage depends on the user's Attack or Special Attack stat and the target's Defense or Special Defense`}
 }
 
 guide.stab = {
   name: `Battle: STAB`,
-  description: function() { return `If a Pokemon uses a damaging move that has the same type as one of that Pokemon's types, the move's damage is increased by x1.5.<br>This is known as same-type attack bonus, or STAB` }
+  description: function() { return `If a Pokemon uses a damaging move that has the same type as one of that Pokemon's types, the move's damage is increased by x1.5<br>This is known as same-type attack bonus, or STAB` }
 }
 
 guide.battleFatigue = {
@@ -381,6 +386,11 @@ guide.battleFatigue = {
 guide.statusEffects = {
   name: `Battle: Status Effects`,
   description: function() { return `Certain moves inflict status effects, such as ${tagConfused}, ${tagBurn}, ${tagPoisoned}, ${tagFreeze}, ${tagParalysis} or ${tagSleep}.<br><br>You can further check their effects by right click/long press` }
+}
+
+guide.shiny = {
+  name: `Shiny Pokemon`,
+  description: function() { return `At a rate of 1/400, Pokemon can be shiny. These odds can be boosted through different means<br><br>Shiny Pokemon deal 15% more damage. The visual distinction can be toggled from their move menu. This wont affect the damage bonus they get`}
 }
 
 function setGuide(){

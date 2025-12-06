@@ -14,6 +14,7 @@ const wildAreaLevel1 = 10
 const wildAreaLevel2 = 30
 const wildAreaLevel3 = 50
 const wildAreaLevel4 = 70
+const wildAreaLevel5 = 90
 
 const wildRareItemsFire = [item.charcoal, item.occaBerry]
 const wildRareItemsWater = [item.mysticWater, item.passhoBerry]
@@ -591,6 +592,23 @@ areas.expertTrainingI = {
     },
 }
 
+areas.victoryRoadI = {
+    rotation : 1,
+    type: `dungeon`,
+    background : `town`,
+    level : wildAreaLevel5,
+    unlockDescription : `🔒 Defeat Elite Trainer Cynthia in VS to unlock`,
+    unlockRequirement : function() { return areas.vsEliteTrainerCynthia.defeated },
+    icon: item.lightClay,
+    spawns: {
+        common : [pkmn.nidoking,pkmn.steelix, pkmn.crobat, pkmn.rhyperior],
+    },
+    drops: {
+        common : [item.nothing],
+        rare : [item.lightClay]
+    },
+}
+
 
 //rotation 2
 
@@ -659,6 +677,23 @@ areas.expertTrainingII = {
     drops: {
         common : [item.nothing],
         uncommon : [item.sludgeBombTm, item.iceBeamTm, item.bugBuzzTm, item.aquaTailTm, item.leafBladeTm, item.auraSphereTm]
+    },
+}
+
+areas.victoryRoadII = {
+    rotation : 2,
+    type: `dungeon`,
+    background : `town`,
+    level : wildAreaLevel5,
+    unlockDescription : `🔒 Defeat Elite Trainer Cynthia in VS to unlock`,
+    unlockRequirement : function() { return areas.vsEliteTrainerCynthia.defeated },
+    icon: item.mentalHerb,
+    spawns: {
+        common : [pkmn.golem,pkmn.whiscash, pkmn.aggron, pkmn.exploud],
+    },
+    drops: {
+        common : [item.nothing],
+        rare : [item.mentalHerb]
     },
 }
 
@@ -733,6 +768,22 @@ areas.expertTrainingIII = {
 }
 
 
+areas.victoryRoadIII = {
+    rotation : 3,
+    type: `dungeon`,
+    background : `town`,
+    level : wildAreaLevel5,
+    unlockDescription : `🔒 Defeat Elite Trainer Cynthia in VS to unlock`,
+    unlockRequirement : function() { return areas.vsEliteTrainerCynthia.defeated },
+    icon: item.eviolite,
+    spawns: {
+        common : [pkmn.magnezone,pkmn.gyarados, pkmn.azumarill, pkmn.machamp],
+    },
+    drops: {
+        common : [item.nothing],
+        rare : [item.eviolite]
+    },
+}
 
 //        common : [item.strengthTm, item.flamethrowerTm, item.thunderboltTm, item.earthquakeTm, item.flashCannonTm, item.flyTm, item.sludgeBombTm, item.iceBeamTm, item.bugBuzzTm, item.aquaTailTm, item.leafBladeTm, item.auraSphereTm, item.psychicTm, item.powerGemTm, item.phantomForceTm, item.dragonRushTm, item.darkPulseTm, item.playRoughTm]
 
@@ -1103,7 +1154,101 @@ areas.vsGymLeaderPhoebe = {
     reward : [item.spellTag]
 }
 
+areas.vsTwinTrainersBellisse = {
+    name: `Twin Trainers Bellise`,
+    background : `gym`,
+    sprite : `twins`,
+    trainer: true,
+    type: `vs`,
+    level : 65,
+    team : {
+        slot1 : pkmn.lickilicky,
+        slot1Moves : [move.strength.id,move.bodyPress.id, move.hyperBeam.id],
+        slot2 : pkmn.raichu,
+        slot2Moves : [move.magneticFlux.id, move.discharge.id, move.thunderbolt.id],
+        slot3 : pkmn.rapidash,
+        slot3Moves : [move.fireFang.id, move.flameCharge.id, move.bodyPress.id],
+        slot4 : pkmn.nidoking,
+        slot4Moves : [move.honeClaws.id, move.earthquake.id, move.smog.id],
+        slot5 : pkmn.nidoqueen,
+        slot5Moves : [move.earthPower.id, move.rototiller.id, move.dig.id],
+        slot6 : pkmn.wigglytuff,
+        slot6Moves : [move.hyperVoice.id, move.moonblast.id, move.hyperBeam.id],
+    },
+    reward : [pkmn.plusle]
+}
 
+areas.vsAceTrainerRicardo = {
+    name: `Ace Trainer Ricardo`,
+    background : `gym`,
+    sprite : `aceTrainerSnowM`,
+    trainer: true,
+    type: `vs`,
+    level : 70,
+    team : {
+        slot1 : pkmn.charizard,
+        slot1Moves : [move.flamethrower.id,move.fly.id, move.honeClaws.id],
+        slot2 : pkmn.rotomWash,
+        slot2Moves : [move.discharge.id, move.confuseRay.id, move.scald.id],
+        slot3 : pkmn.lopunny,
+        slot3Moves : [move.dizzyPunch.id, move.bulkUp.id, move.crossChop.id],
+        slot4 : pkmn.steelix,
+        slot4Moves : [move.ironDefense.id, move.earthquake.id, move.ironTail.id],
+        slot5 : pkmn.drapion,
+        slot5Moves : [move.crossPoison.id, move.bugBuzz.id, move.smog.id],
+        slot6 : pkmn.salamence,
+        slot6Moves : [move.fireFang.id, move.dragonDance.id, move.dragonClaw.id],
+    },
+    reward : [pkmn.charmander]
+}
+
+areas.vsAceTrainerLily = {
+    name: `Ace Trainer Lily`,
+    background : `gym`,
+    sprite : `aceTrainerSnowF`,
+    trainer: true,
+    type: `vs`,
+    level : 75,
+    team : {
+        slot1 : pkmn.primarina,
+        slot1Moves : [move.hyperVoice.id,move.scald.id, move.moonblast.id],
+        slot2 : pkmn.aegislash,
+        slot2Moves : [move.shadowSneak.id, move.confuseRay.id, move.shadowBall.id],
+        slot3 : pkmn.lucario,
+        slot3Moves : [move.bulletPunch.id, move.ironDefense.id, move.auraSphere.id],
+        slot4 : pkmn.meganium,
+        slot4Moves : [move.stunSpore.id, move.energyBall.id, move.solarBeam.id],
+        slot5 : pkmn.swampert,
+        slot5Moves : [move.earthquake.id, move.waterfall.id, move.bulkUp.id],
+        slot6 : pkmn.tyranitar,
+        slot6Moves : [move.crunch.id, move.hyperBeam.id, move.earthPower.id],
+    },
+    reward : [pkmn.mudkip]
+}
+
+areas.vsEliteTrainerCynthia = {
+    name: `Elite Trainer Cynthia`,
+    background : `gym`,
+    sprite : `cynthia`,
+    trainer: true,
+    type: `vs`,
+    level : 80,
+    team : {
+        slot1 : pkmn.eelektross,
+        slot1Moves : [move.thunderbolt.id, move.magneticFlux.id, move.discharge.id, move.nastyPlot.id],
+        slot2 : pkmn.porygonZ,
+        slot2Moves : [move.triAttack.id, move.psychic.id, move.hyperBeam.id, move.nastyPlot.id],
+        slot3 : pkmn.milotic,
+        slot3Moves : [move.scald.id, move.waterfall.id, move.liquidation.id, move.psychic.id],
+        slot4 : pkmn.spiritomb,
+        slot4Moves : [move.confuseRay.id, move.hex.id, move.shadowBall.id, move.shadowSneak.id],
+        slot5 : pkmn.togekiss,
+        slot5Moves : [move.airShlash.id, move.thunderWave.id, move.dazzlingGleam.id, move.moonblast.id],
+        slot6 : pkmn.megaGarchomp,
+        slot6Moves : [move.swordsDance.id, move.dragonTail.id, move.dragonRush.id, move.earthquake.id],
+    },
+    reward : [item.dragonFang]
+}
 
 
 

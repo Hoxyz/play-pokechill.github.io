@@ -259,6 +259,63 @@ item.shinyStone = {
 }
 
 
+item.hpUp = {
+    type: 'key',
+    vitamin: true,
+    info: function() {return `Increase the HP IV of a Pokemon by 1`},
+}
+
+item.protein = {
+    type: 'key',
+    vitamin: true,
+    info: function() {return `Increase the Attack IV of a Pokemon by 1`},
+}
+
+item.iron = {
+    type: 'key',
+    vitamin: true,
+    info: function() {return `Increase the Defense IV of a Pokemon by 1`},
+}
+
+item.calcium = {
+    type: 'key',
+    vitamin: true,
+    info: function() {return `Increase the Special Attack IV of a Pokemon by 1`},
+}
+
+item.zinc = {
+    type: 'key',
+    vitamin: true,
+    info: function() {return `Increase the Special Defense IV of a Pokemon by 1`},
+}
+
+item.carbos = {
+    type: 'key',
+    vitamin: true,
+    info: function() {return `Increase the Speed IV of a Pokemon by 1`},
+}
+
+
+item.eviolite = {
+    type: "held",
+    info: function() {return `When held: If a Pokemon has not fully evolved, increase overall defense by x${this.power()}`},
+    power : function() { return 1+(returnItemLevel(this.id)/5)}
+}
+
+item.lightClay = {
+    type: "held",
+    info: function() {return `When held: Increases the duration of positive buffs used by 1 turn and increases damage dealt by ${this.power()}%`},
+    power : function() { return 5+(5*returnItemLevel(this.id))}
+}
+
+item.mentalHerb = {
+    type: "held",
+    info: function() {return `When held: Decreases the duration of negative buffs received by 1 turn and decreases damage taken by ${this.power()}%`},
+    power : function() { return 5+(5*returnItemLevel(this.id))}
+}
+
+
+
 
 
 

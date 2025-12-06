@@ -4797,7 +4797,7 @@ pkmn.swablu = {
         sdef: 75,
         spe: 50,
     },
-    evolve: function() { return { 1: { pkmn: pkmn.cacturne, level: evolutionLevel2 } } },
+    evolve: function() { return { 1: { pkmn: pkmn.altaria, level: evolutionLevel2 } } },
 }
 
 pkmn.altaria = {
@@ -5144,6 +5144,30 @@ pkmn.luvdisc = {
         satk: 40,
         sdef: 65,
         spe: 97,
+    }
+}
+
+pkmn.feebas = {
+    type: ["water"],
+    bst: {
+        hp: 20,
+        atk: 15,
+        def: 20,
+        satk: 10,
+        sdef: 55,
+        spe: 80,
+    }
+}
+
+pkmn.milotic = {
+    type: ["water"],
+    bst: {
+        hp: 95,
+        atk: 60,
+        def: 79,
+        satk: 100,
+        sdef: 125,
+        spe: 81,
     }
 }
 
@@ -5915,6 +5939,18 @@ pkmn.garchomp = {
         satk: 80,
         sdef: 85,
         spe: 102,
+    }
+}
+
+pkmn.megaGarchomp = {
+    type: ["dragon","ground"],
+    bst: {
+        hp: 108,
+        atk: 170,
+        def: 115,
+        satk: 120,
+        sdef: 95,
+        spe: 92,
     }
 }
 

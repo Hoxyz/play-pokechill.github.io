@@ -551,6 +551,7 @@ flex-direction: column;
     border: var(--light1) solid 3px;
     cursor: pointer;
     transition: 0.1s;
+    line-height: 0.8rem;
 }
 
 .menu-item:active{
@@ -901,7 +902,28 @@ border: 1px solid rgba(255, 255, 255, 0.3);
 .pkmn-editor-side strong{
     background: var(--dark1);
         box-shadow: rgba(0, 0, 0, 0.4) 2px 2px 2px 2px;
+}
 
+.pkmn-editor-side svg{
+    background: var(--dark1);
+    color: white;
+    border-radius: 0.3rem;
+    padding: 0.2rem;
+    height: 2.5rem;
+    width: 2.5rem;
+    margin-top: 0.2rem;
+    box-shadow: rgba(0, 0, 0, 0.4) 2px 2px 2px 1px;
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+.pkmn-editor-side svg:hover{
+    scale: 1.1;
+}
+
+
+.pkmn-editor-side svg:active{
+    scale: 0.9;
 }
 
 .pkmn-editor-side .explore-sprite img{
@@ -1665,6 +1687,16 @@ border: 1px solid rgba(255, 255, 255, 0.3);
     gap: 0.5rem;
     flex-wrap: wrap;
 }
+
+@media (max-width: 1000px) {
+    .pokedex-filters {
+        height: auto;
+        flex-direction: column;
+            justify-items: center;
+    align-content: center;
+    }
+}
+
 
 .pokedex-filters select{
     padding: 0 0.5rem;

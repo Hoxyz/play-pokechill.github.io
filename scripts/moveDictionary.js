@@ -13,6 +13,9 @@ const defaultPlayerMoveTimer = 2000
 
 //unique skills
 
+//tier 4 - learnt by normal pokemon = 110-120 uncompromised dmg
+//tier 5 - learnt by legendary pokemon = 130-150 uncompromised dmg
+
 move.howl = {
     split: "special",
     type: "normal",
@@ -112,7 +115,7 @@ move.relicSong = {
 move.triAttack = {
     split: "special",
     type: "normal",
-    power: 120,
+    power: 110,
     info: function() {return `10% chance to inflict ${tagBurn},${tagParalysis} or ${tagFreeze}`},
     hitEffect: function(target) { if (rng(0.10)){ if (rng(0.33)) {moveBuff(target,'burn')} else if (rng(0.33)) { moveBuff(target,'paralysis')} else moveBuff(target,'freeze') }},
 }
@@ -1501,7 +1504,7 @@ move.hammerArm = {
     rarity: 3,
     type: "fighting",
     power: 90,
-    info: function() {return `Increases Speed by 50%`},
+    info: function() {return `Decreases Speed by 50%`},
     hitEffect: function(target) { moveBuff(target,'spedown1','self') },
 }
 
