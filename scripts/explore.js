@@ -52,7 +52,10 @@ function voidAnimation(divName, animationName) {
 }
 
 function format(input) {
-    const str = String(input); // fuerza a que sea string
+    let str = String(input);
+
+    str = str.replace(/hisuian/gi, 'hsn. ');
+
     return str
         .replace(/([a-z])([A-Z])/g, '$1 $2')
         .replace(/\b\w/g, c => c.toUpperCase());
@@ -223,9 +226,11 @@ function setWildPkmn(){
 
     if (areas[saved.currentArea].level !== undefined) wildLevel = random(areas[saved.currentArea].level-9,areas[saved.currentArea].level)
     
-    spawnedPkmn = arrayPick(areas[saved.currentArea].spawns.common).id 
+    if (areas[saved.currentArea].spawns.common) spawnedPkmn = arrayPick(areas[saved.currentArea].spawns.common).id 
     if (rng(0.08) && areas[saved.currentArea].spawns.uncommon) spawnedPkmn = arrayPick(areas[saved.currentArea].spawns.uncommon).id
     if (rng(0.01) && areas[saved.currentArea].spawns.rare) spawnedPkmn = arrayPick(areas[saved.currentArea].spawns.rare).id
+
+    if (areas[saved.currentArea].spawns.common == undefined) spawnedPkmn = arrayPick(areas[saved.currentArea].spawns.rare).id
 
 
     // picks amount of moves based on level
@@ -485,10 +490,14 @@ function leaveCombat(){
     
 
     for (let i = 0; i < item.mysteryEgg.got; i++) {
-    let hatchedPkmn = arrayPick(areas[saved.currentArea].spawns.common).id
+    let hatchedPkmn ;
+    if (areas[saved.currentArea].spawns.common) hatchedPkmn = arrayPick(areas[saved.currentArea].spawns.common).id
     if (areas[saved.currentArea].spawns.uncommon && rng(0.08)) hatchedPkmn = arrayPick(areas[saved.currentArea].spawns.uncommon).id
     if (areas[saved.currentArea].spawns.rare && rng(0.01)) hatchedPkmn = arrayPick(areas[saved.currentArea].spawns.rare).id
 
+    if (areas[saved.currentArea].spawns.common == undefined) hatchedPkmn = arrayPick(areas[saved.currentArea].spawns.rare).id
+    
+    
     let divTag = ""
 
     for (const iv in pkmn[hatchedPkmn].ivs){
@@ -846,11 +855,9 @@ function openMenu(){
     if (!saved.claimedExportReward) {document.getElementById(`menu-export-reward`).style.display = "flex"} else document.getElementById(`menu-export-reward`).style.display = "none"
 
     if (saved.currentArea!==undefined){
-        document.getElementById(`menu-item-travel`).style.filter = "brightness(0.6)"
         document.getElementById(`menu-item-vs`).style.filter = "brightness(0.6)"
         document.getElementById(`menu-item-team`).style.filter = "brightness(0.6)"
     } else {
-        document.getElementById(`menu-item-travel`).style.filter = "brightness(1)"
         document.getElementById(`menu-item-vs`).style.filter = "brightness(1)"
         document.getElementById(`menu-item-team`).style.filter = "brightness(1)"
     }
@@ -1683,7 +1690,7 @@ document.addEventListener("contextmenu", e => {
         document.getElementById("tooltipTop").style.display = `none`
         document.getElementById("tooltipTitle").innerHTML = `Events`
         document.getElementById("tooltipMid").style.display = `none`
-        document.getElementById("tooltipBottom").innerHTML = `Events are separated in two categories. Area Events, the first one, might house both items and Pokemon to get. Legendary Trainers require a special item that can be rarely found in the adjacent area in order to be fought, and will award a Legendary Pokemon once defeated. All Events rotate every three days.`
+        document.getElementById("tooltipBottom").innerHTML = `Events are might house both items and Pokemon to get. Events marked with a skull signify powerful foes that usually require an item to catch (The item wont be consumed if failed to defeat). All Events rotate every three days.`
         openTooltip()
     }
 
@@ -2619,12 +2626,14 @@ function exploreCombatPlayer() {
 
 
 
-
+        if (team[exploreActiveMember].buffs?.freeze==0 && team[exploreActiveMember].buffs?.sleep==0){
         if (pkmn[ team[exploreActiveMember].pkmn.id ]?.ability != ability.sheerForce.id || (pkmn[ team[exploreActiveMember].pkmn.id ]?.ability == ability.sheerForce.id && totalPower==0  )){
         if (move[nextMovePlayer].hitEffect && typeEffectiveness(move[nextMovePlayer].type, pkmn[saved.currentPkmn].type)!= 0) {
             move[nextMovePlayer].hitEffect("wild")
         }
         }
+        }
+
 
         updateTeamBuffs()
         updateWildBuffs()
@@ -3122,7 +3131,9 @@ function exploreCombatWild() {
             if ( wildBuffs[buff]>0) wildBuffs[buff]--
         }
 
+        if (wildBuffs.freeze==0 && wildBuffs.sleep==0 ){
         if (move[nextMoveWild].hitEffect && typeEffectiveness(move[nextMoveWild].type, pkmn[team[exploreActiveMember].pkmn.id].type)!= 0) move[nextMoveWild].hitEffect("player")
+        }
 
         //can be optimised
         updateWildBuffs()
@@ -3157,7 +3168,12 @@ function initialiseArea(){
 function setWildAreas() {
 
     document.getElementById("explore-listing").innerHTML = ""
-    document.getElementById("explore-menu-header").innerHTML = `<span data-help="Wild Areas">Wild Areas <svg data-help="Wild Areas" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4c-4.41 0-8 3.59-8 8s3.59 8 8 8s8-3.59 8-8s-3.59-8-8-8m1 13h-2v-6h2zm0-8h-2V7h2z" opacity="0.3"/><path fill="currentColor" d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8"/></svg> </span>`
+    document.getElementById("explore-menu-header").innerHTML = `
+    <span data-help="Wild Areas">Wild Areas
+    <svg data-help="Wild Areas" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4c-4.41 0-8 3.59-8 8s3.59 8 8 8s8-3.59 8-8s-3.59-8-8-8m1 13h-2v-6h2zm0-8h-2V7h2z" opacity="0.3"/><path fill="currentColor" d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8"/></svg>
+    </span>
+    <span data-help="Wild Areas">Rotation ${rotationWildCurrent}/${rotationWildMax} (ends in <strong class="time-counter-daily"></strong>)</span>
+    `
     document.getElementById("explore-menu-header").style.backgroundImage = "url(img/bg/forest.png)"
 
 
@@ -3193,11 +3209,18 @@ function setWildAreas() {
         divAreas.innerHTML = `
                 ${unlockRequirement}
                 <span class="hitbox"></span>
+
+                
                 <div style="width: 100%;  border-right: dotted var(--light1) 4px; ">
+
+
+                <svg class="barcode-flair xmlns="http://www.w3.org/2000/svg" width="236" height="144"><svg id="barcodeSVG" role="img" aria-label="Barcode preview" width="234px" height="142px" x="0px" y="0px" viewBox="0 0 234 142" xmlns="http://www.w3.org/2000/svg" version="1.1" style="transform: translate(0,0)"><rect x="0" y="0" width="234" height="142" style="fill:none;"/><g transform="translate(10, 10)" style="fill:#000000;"><text style="font: 20px Roboto" text-anchor="start" x="0" y="122">5</text></g><g transform="translate(34, 10)" style="fill:#000000;"><rect x="0" y="0" width="2" height="112"/><rect x="4" y="0" width="2" height="112"/><text style="font: 20px Roboto" text-anchor="middle" x="3" y="134"></text></g><g transform="translate(40, 10)" style="fill:#000000;"><rect x="6" y="0" width="2" height="100"/><rect x="10" y="0" width="4" height="100"/><rect x="16" y="0" width="2" height="100"/><rect x="22" y="0" width="6" height="100"/><rect x="30" y="0" width="4" height="100"/><rect x="38" y="0" width="4" height="100"/><rect x="46" y="0" width="2" height="100"/><rect x="52" y="0" width="4" height="100"/><rect x="58" y="0" width="8" height="100"/><rect x="68" y="0" width="2" height="100"/><rect x="74" y="0" width="6" height="100"/><rect x="82" y="0" width="2" height="100"/><text style="font: 20px Roboto" text-anchor="middle" x="42" y="122">901234</text></g><g transform="translate(124, 10)" style="fill:#000000;"><rect x="2" y="0" width="2" height="112"/><rect x="6" y="0" width="2" height="112"/><text style="font: 20px Roboto" text-anchor="middle" x="5" y="134"></text></g><g transform="translate(134, 10)" style="fill:#000000;"><rect x="0" y="0" width="4" height="100"/><rect x="8" y="0" width="4" height="100"/><rect x="14" y="0" width="4" height="100"/><rect x="20" y="0" width="4" height="100"/><rect x="28" y="0" width="2" height="100"/><rect x="38" y="0" width="2" height="100"/><rect x="42" y="0" width="2" height="100"/><rect x="46" y="0" width="6" height="100"/><rect x="56" y="0" width="2" height="100"/><rect x="62" y="0" width="6" height="100"/><rect x="70" y="0" width="2" height="100"/><rect x="78" y="0" width="2" height="100"/><text style="font: 20px Roboto" text-anchor="middle" x="42" y="122">123457</text></g><g transform="translate(218, 10)" style="fill:#000000;"><rect x="0" y="0" width="2" height="112"/><rect x="4" y="0" width="2" height="112"/><text style="font: 20px Roboto" text-anchor="middle" x="3" y="134"></text></g></svg></svg>
+
+
+
                     <span class="explore-ticket-left">
-                        <span><strong>Location</strong><span> ${format(i)} </span></span>
-                        <span><strong>Area Level</strong><span> ${Math.max(1,areas[i].level-10)}-${areas[i].level}</span></span>
-                        <span><strong>Time Remaining</strong> ✈ <span class="time-counter-daily"></span></span>
+                        <span><strong>${format(i)}</strong></span>
+                        <span><strong>Level :</strong><span> ${Math.max(1,areas[i].level-10)}-${areas[i].level}  ✈</span></span>
                     </span>
                 </div>
                 <div style="width: 8rem;" class="explore-ticket-right">
@@ -3215,7 +3238,11 @@ function setWildAreas() {
 function setDungeonAreas() {
 
     document.getElementById("explore-listing").innerHTML = ""
-    document.getElementById("explore-menu-header").innerHTML = `<span data-help="Dungeons">Dungeons <svg data-help="Dungeons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4c-4.41 0-8 3.59-8 8s3.59 8 8 8s8-3.59 8-8s-3.59-8-8-8m1 13h-2v-6h2zm0-8h-2V7h2z" opacity="0.3"/><path fill="currentColor" d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8"/></svg> </span>`
+    document.getElementById("explore-menu-header").innerHTML = `
+    <span data-help="Dungeons">Dungeons <svg data-help="Dungeons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4c-4.41 0-8 3.59-8 8s3.59 8 8 8s8-3.59 8-8s-3.59-8-8-8m1 13h-2v-6h2zm0-8h-2V7h2z" opacity="0.3"/><path fill="currentColor" d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8"/></svg>
+    </span>
+    <span data-help="Wild Areas">Rotation ${rotationDungeonCurrent}/${rotationDungeonMax} (ends in <strong class="time-counter-daily"></strong>)</span>
+    `
     document.getElementById("explore-menu-header").style.backgroundImage = "url(img/bg/cave.png)" 
 
     for (const i in areas) {
@@ -3252,10 +3279,12 @@ function setDungeonAreas() {
                 ${unlockRequirement}
                 <span class="hitbox"></span>
                 <div style="width: 100%;  border-right: dotted var(--light1) 4px; ">
+
+                                <svg class="barcode-flair xmlns="http://www.w3.org/2000/svg" width="236" height="144"><svg id="barcodeSVG" role="img" aria-label="Barcode preview" width="234px" height="142px" x="0px" y="0px" viewBox="0 0 234 142" xmlns="http://www.w3.org/2000/svg" version="1.1" style="transform: translate(0,0)"><rect x="0" y="0" width="234" height="142" style="fill:none;"/><g transform="translate(10, 10)" style="fill:#000000;"><text style="font: 20px Roboto" text-anchor="start" x="0" y="122">5</text></g><g transform="translate(34, 10)" style="fill:#000000;"><rect x="0" y="0" width="2" height="112"/><rect x="4" y="0" width="2" height="112"/><text style="font: 20px Roboto" text-anchor="middle" x="3" y="134"></text></g><g transform="translate(40, 10)" style="fill:#000000;"><rect x="6" y="0" width="2" height="100"/><rect x="10" y="0" width="4" height="100"/><rect x="16" y="0" width="2" height="100"/><rect x="22" y="0" width="6" height="100"/><rect x="30" y="0" width="4" height="100"/><rect x="38" y="0" width="4" height="100"/><rect x="46" y="0" width="2" height="100"/><rect x="52" y="0" width="4" height="100"/><rect x="58" y="0" width="8" height="100"/><rect x="68" y="0" width="2" height="100"/><rect x="74" y="0" width="6" height="100"/><rect x="82" y="0" width="2" height="100"/><text style="font: 20px Roboto" text-anchor="middle" x="42" y="122">901234</text></g><g transform="translate(124, 10)" style="fill:#000000;"><rect x="2" y="0" width="2" height="112"/><rect x="6" y="0" width="2" height="112"/><text style="font: 20px Roboto" text-anchor="middle" x="5" y="134"></text></g><g transform="translate(134, 10)" style="fill:#000000;"><rect x="0" y="0" width="4" height="100"/><rect x="8" y="0" width="4" height="100"/><rect x="14" y="0" width="4" height="100"/><rect x="20" y="0" width="4" height="100"/><rect x="28" y="0" width="2" height="100"/><rect x="38" y="0" width="2" height="100"/><rect x="42" y="0" width="2" height="100"/><rect x="46" y="0" width="6" height="100"/><rect x="56" y="0" width="2" height="100"/><rect x="62" y="0" width="6" height="100"/><rect x="70" y="0" width="2" height="100"/><rect x="78" y="0" width="2" height="100"/><text style="font: 20px Roboto" text-anchor="middle" x="42" y="122">123457</text></g><g transform="translate(218, 10)" style="fill:#000000;"><rect x="0" y="0" width="2" height="112"/><rect x="4" y="0" width="2" height="112"/><text style="font: 20px Roboto" text-anchor="middle" x="3" y="134"></text></g></svg></svg>
+
                     <span class="explore-ticket-left">
-                        <span><strong>Location</strong><span> ${format(i)} </span></span>
-                        <span><strong>Dungeon Level</strong><span> ${Math.max(1,areas[i].level-10)}-${areas[i].level}</span></span>
-                        <span><strong>Time Remaining</strong> ✈ <span class="time-counter-daily"> </span></span>
+                        <span><strong>${format(i)}</strong></span>
+                        <span><strong>Level :</strong><span> ${Math.max(1,areas[i].level-10)}-${areas[i].level} ✈</span></span>
                     </span>
                 </div>
                 <div style="width: 8rem;" class="explore-ticket-right">
@@ -3276,7 +3305,11 @@ function setDungeonAreas() {
 function setEventAreas() {
 
     document.getElementById("explore-listing").innerHTML = ""
-    document.getElementById("explore-menu-header").innerHTML = `<span data-help="Events">Events <svg data-help="Events" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4c-4.41 0-8 3.59-8 8s3.59 8 8 8s8-3.59 8-8s-3.59-8-8-8m1 13h-2v-6h2zm0-8h-2V7h2z" opacity="0.3"/><path fill="currentColor" d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8"/></svg> </span>`
+    document.getElementById("explore-menu-header").innerHTML = `
+    <span data-help="Events">Events <svg data-help="Events" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4c-4.41 0-8 3.59-8 8s3.59 8 8 8s8-3.59 8-8s-3.59-8-8-8m1 13h-2v-6h2zm0-8h-2V7h2z" opacity="0.3"/><path fill="currentColor" d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8"/></svg>
+    </span>
+    <span data-help="Wild Areas">Rotation ${rotationEventCurrent}/${rotationEventMax} (ends in <strong class="time-counter-event"></strong>)</span>
+    `
     document.getElementById("explore-menu-header").style.backgroundImage = "url(img/bg/mini/special6.png)" 
 
   for (const i in areas) {
@@ -3309,16 +3342,26 @@ function setEventAreas() {
        let unlockRequirement = ""
        if (areas[i].unlockRequirement && !areas[i].unlockRequirement()) unlockRequirement =`<span class="ticket-unlock">${areas[i].unlockDescription}</span>`
 
+       let eventTag ;
+       if (areas[i].level < 50) eventTag = `<strong class="event-tag">Tier I ✦</strong>`
+       if (areas[i].level > 50) eventTag = `<strong style="filter:hue-rotate(140deg)" class="event-tag">Tier II ◈</strong>`
+       //if (areas[i].encounter) eventTag = `<strong style="filter:hue-rotate(140deg)" class="event-tag">Tier I Raid ❖</strong>`
 
+       let nameTag = ""
+       if (areas[i].encounter) nameTag = `<svg class="event-icon" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"><path fill="currentcolor" d="M55.9 38.9c2-3.5 3.1-7.5 3.1-11.8C59 13.3 46.9 2 32 2S5 13.3 5 27.2c0 4.2 1.1 8.2 3.1 11.8A7.16 7.16 0 0 0 5 44.9c0 4.1 3.6 7.5 8 7.5c.4 0 .8 0 1.2-.1c-.5 1.2-1.1 2.6-1.2 3.4c-.6 3.1 2.7 5.7 6.1 5.7c0 0 1.6.1 2-.2c1.3-1.2 0-6.4 0-6.4c0-.9.8-1.6 1.7-1.6s1.7.7 1.7 1.6c0 0-1.2 5.4 0 6.6c1 .9 4.8.9 5.8 0c1.3-1.2 0-6.6 0-6.6c0-.9.8-1.6 1.7-1.6s1.7.7 1.7 1.6c0 0-1.3 5.4 0 6.6c1 .9 4.8.9 5.8 0c1.3-1.2 0-6.6 0-6.6c0-.9.8-1.6 1.7-1.6c1 0 1.7.7 1.7 1.6c0 0-1.3 5.3 0 6.4c.3.3 2 .2 2 .2c3.4 0 6.7-2.6 6.1-5.7c-.1-.7-.7-2.2-1.2-3.4c.4.1.8.1 1.2.1c4.4 0 8-3.4 8-7.5c0-2.4-1.2-4.6-3.1-6m-38.5 1.4c-3-2.1-10.9-10.8-4.4-11.1c4-.2 13.7 3.1 14.3 6.8c.5 2.6-6.8 6.4-9.9 4.3m19.1 7.9c-1.5 1.4-7.2 1.4-8.8 0c-1.4-1.4.9-2.4 1.8-3.8c1-1.7 1.4-3.2 2.6-3.2s1.7 1.5 2.6 3.2c.9 1.4 3.3 2.5 1.8 3.8m10.4-7.9c-3 2.1-10.3-1.8-9.9-4.3c.6-3.7 10.3-7 14.3-6.8c6.5.4-1.4 9.1-4.4 11.1"/></svg>`
+
+       let eventName = format(i)
+       if (areas[i].name) eventName = areas[i].name
+
+        divAreas.classList.add("event-ticket")
 
         divAreas.innerHTML = `
         ${unlockRequirement}
                 <span class="hitbox"></span>
-                <div style="width: 100%;  border-right: dotted var(--light1) 4px; ">
+                <div style="width: 100%; ">
                     <span class="explore-ticket-left">
-                        <span><strong>Location</strong><span> ${format(i)} </span></span>
-                        <span><strong>Area Level</strong><span> ${Math.max(1,areas[i].level-10)}-${areas[i].level}</span></span>
-                        <span><strong>Time Remaining</strong> ✈ <span class="time-counter-event"></span></span>
+                        <span><strong>${eventName}</strong>${nameTag}</span>
+                        <span><strong>Level :</strong><span> ${Math.max(1,areas[i].level-10)}-${areas[i].level}</span>  ${eventTag}</span>
                     </span>
                 </div>
                 <div style="width: 8rem;" class="explore-ticket-right">
@@ -3331,22 +3374,6 @@ function setEventAreas() {
         delete divAreas.dataset.area;
         divAreas.dataset.trainer = i
         divAreas.classList.add("encounter-ticket")
-        divAreas.innerHTML = `
-        ${unlockRequirement}
-                <span class="hitbox"></span>
-                                <img class="vs-card-flair" style="opacity:0.2" src="img/icons/pokeball.svg">
-                <div style="width: 100%;  border-right: dotted var(--light1) 4px; ">
-                    <span class="explore-ticket-left">
-                        <span><strong>${areas[i].name}</strong></span>
-                        <span><strong>Area Level</strong><span> ${Math.max(1,areas[i].level-10)}-${areas[i].level}</span></span>
-                        <span><strong>Time Remaining</strong> ✈ <span class="time-counter-event"></span></span>
-                    </span>
-                </div>
-                <div style="width: 8rem;" class="explore-ticket-right">
-                    <span class="explore-ticket-bg" style="background-image: url(img/bg/${areas[i].background}.png);"></span>
-                    <img class="explore-ticket-sprite sprite-trim" style="z-index: 10;" src="img/pkmn/sprite/${areas[i].icon.id}.png">
-                </div>
-        `;
         }
 
 
@@ -3801,6 +3828,7 @@ function updateItemBag(){
         if (!item[i].type?.includes(bagCategory) && !item[i].evo) continue
         if (item[i].evo && bagCategory!== "key" && !item[i].type?.includes(bagCategory)) continue
         
+        if (item[i].rotation && item[i].rotation!== rotationEventCurrent) item[i].got=0
 
         //if (!rng(0.05)) continue
         if (item[i].got==0) continue

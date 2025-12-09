@@ -324,17 +324,44 @@ item.mentalHerb = {
 
 item.thunderousRock = {
     type: "key",
-    info: function() {return `Can be used to catch Zapdos once`},
+    rotation: 1,
+    info: function() {return `Can be used to catch Zapdos once. Expires after event finishes`},
 }
 
 item.fieryRock = {
     type: "key",
-    info: function() {return `Can be used to catch Moltres once`},
+    rotation: 1,
+    info: function() {return `Can be used to catch Moltres once. Expires after event finishes`},
 }
 
 item.articRock = {
     type: "key",
-    info: function() {return `Can be used to catch Articuno once`},
+    rotation: 1,
+    info: function() {return `Can be used to catch Articuno once. Expires after event finishes`},
+}
+
+item.ancientOrchid = {
+    type: "key",
+    rotation: 2,
+    info: function() {return `Can be used to catch a privimite Paradox Pokemon once. Expires after event finishes`},
+}
+
+item.ancientKeystone = {
+    type: "key",
+    rotation: 3,
+    info: function() {return `Can be used to catch Regirock once. Expires after event finishes`},
+}
+
+item.steelKeystone = {
+    type: "key",
+    rotation: 3,
+    info: function() {return `Can be used to catch Registeel once. Expires after event finishes`},
+}
+
+item.frozenKeystone = {
+    type: "key",
+    rotation: 3,
+    info: function() {return `Can be used to catch Regice once. Expires after event finishes`},
 }
 
 

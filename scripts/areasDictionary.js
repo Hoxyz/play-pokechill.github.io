@@ -938,14 +938,13 @@ areas.victoryRoadIII = {
 
 
 
-const rotationEventMax = 1;
+const rotationEventMax = 3;
 
 areas.alphaRuins = {
     rotation: 1,
     type: `event`,
     background : `cave`,
-    tier : 1,
-    level : 10,
+    level : wildAreaLevel1,
     icon: pkmn.unownA,
     spawns: {
         common : [pkmn.unownA,pkmn.unownB, pkmn.unownC, pkmn.unownD, pkmn.unownE, pkmn.unownF, pkmn.unownG, pkmn.unownH, pkmn.unownI, pkmn.unownJ, pkmn.unownK, pkmn.unownL, pkmn.unownM, pkmn.unownN, pkmn.unownO, pkmn.unownP, pkmn.unownQ, pkmn.unownR, pkmn.unownS, pkmn.unownT, pkmn.unownU, pkmn.unownV, pkmn.unownW, pkmn.unownX, pkmn.unownY, pkmn.unownZ],
@@ -953,6 +952,7 @@ areas.alphaRuins = {
     },
     drops: {
         common : [item.mysteryEgg],
+        rare : [item.twistedSpoon],
     },
 }
 
@@ -1070,50 +1070,319 @@ areas.eventMoltres = {
     reward : [pkmn.moltres]
 }
 
-/*
 
-areas.originCave = {
+
+
+//rotation 2
+
+areas.cosplayConvention = {
+    rotation: 2,
     type: `event`,
-    background : `volcano`,
-    tier : 2,
-    level : 80,
-    icon: pkmn.groudon,
+    background : `plant`,
+    level : wildAreaLevel1,
+    icon: pkmn.pikachuBelle,
     spawns: {
-        common : [pkmn.budew,pkmn.cascoon, pkmn.paras, pkmn.caterpie],
-        rare : [pkmn.sudowoodo, pkmn.chatot]
+        common : [pkmn.pichu],
+        rare : [pkmn.pikachuBelle, pkmn.pikachuLibre, pkmn.pikachuPhd, pkmn.pikachuPopstar, pkmn.pikachuRockstar]
+    },
+    drops: {
+        common : [item.mysteryEgg],
+        rare : [item.thunderStone],
     },
 }
 
-areas.trainerGroudon = {
-    name: `Team Leader Maxie`,
-    sprite : `maxie`,
+areas.primitiveGrove = {
+    rotation: 2,
+    type: `event`,
+    background : `forest`,
+    level : 90,
+    icon: pkmn.yanmega,
+    uncatchable: true,
+    unlockDescription : `🔒 Defeat Elite Trainer Cynthia in VS to unlock`,
+    unlockRequirement : function() { return areas.vsEliteTrainerCynthia.defeated },
+    spawns: {
+        common : [pkmn.kabutops,pkmn.aerodactyl,pkmn.rampardos,pkmn.yanmega],
+    },
+    drops: {
+        common : [item.nothing],
+        rare : [item.ancientOrchid]
+    },
+}
+
+areas.eventGreatTusk = {
+    rotation: 2,
+    type: `event`,
+    name: `Great Tusk Revival`,
+    background : `cave`,
+    icon: pkmn.greatTusk,
     trainer: true,
+    encounter: true,
+    difficulty: 25,
+    encounterEffect : function() {item.ancientOrchid.got--},
+    unlockDescription : `🔒 Requires a <img src="img/items/ancientOrchid.png"> Ancient Orchid to enter`,
+    unlockRequirement : function() { return item.ancientOrchid.got>0 },
+    level : 90,
+    team : {
+        slot1 : pkmn.greatTusk,
+        slot1Moves : [move.earthquake.id,move.bulkUp.id, move.focusBlast.id, move.earthPower.id],
+    },
+    reward : [pkmn.greatTusk]
+}
+
+areas.eventScreamTail = {
+    rotation: 2,
     type: `event`,
-    background : `volcano`,
-    tier : 3,
-    level : 80,
-    icon: pkmn.groudon,
+    name: `Screaming Tail Revival`,
+    background : `cave`,
+    icon: pkmn.screamTail,
+    trainer: true,
+    encounter: true,
+    difficulty: 25,
+    encounterEffect : function() {item.ancientOrchid.got--},
+    unlockDescription : `🔒 Requires a <img src="img/items/ancientOrchid.png"> Ancient Orchid to enter`,
+    unlockRequirement : function() { return item.ancientOrchid.got>0 },
+    level : 90,
+    team : {
+        slot1 : pkmn.screamTail,
+        slot1Moves : [move.moonblast.id,move.psychic.id, move.hyperVoice.id, move.disarmingVoice.id],
+    },
+    reward : [pkmn.screamTail]
+}
+
+areas.eventBruteBonnet = {
+    rotation: 2,
+    type: `event`,
+    name: `Brute Bonnet Revival`,
+    background : `cave`,
+    icon: pkmn.bruteBonnet,
+    trainer: true,
+    encounter: true,
+    difficulty: 25,
+    encounterEffect : function() {item.ancientOrchid.got--},
+    unlockDescription : `🔒 Requires a <img src="img/items/ancientOrchid.png"> Ancient Orchid to enter`,
+    unlockRequirement : function() { return item.ancientOrchid.got>0 },
+    level : 90,
+    team : {
+        slot1 : pkmn.bruteBonnet,
+        slot1Moves : [move.spore.id,move.seedBomb.id, move.solarBeam.id, move.darkPulse.id],
+    },
+    reward : [pkmn.bruteBonnet]
+}
+
+areas.eventFlutterMane = {
+    rotation: 2,
+    type: `event`,
+    name: `Flutter Mane Revival`,
+    background : `cave`,
+    icon: pkmn.flutterMane,
+    trainer: true,
+    encounter: true,
+    difficulty: 25,
+    encounterEffect : function() {item.ancientOrchid.got--},
+    unlockDescription : `🔒 Requires a <img src="img/items/ancientOrchid.png"> Ancient Orchid to enter`,
+    unlockRequirement : function() { return item.ancientOrchid.got>0 },
+    level : 90,
+    team : {
+        slot1 : pkmn.flutterMane,
+        slot1Moves : [move.nastyPlot.id,move.shadowBall.id, move.moonblast.id, move.babydollEyes.id],
+    },
+    reward : [pkmn.flutterMane]
+}
+
+areas.eventSlitherWing = {
+    rotation: 2,
+    type: `event`,
+    name: `Slither Wing Revival`,
+    background : `cave`,
+    icon: pkmn.slitherWing,
+    trainer: true,
+    encounter: true,
+    difficulty: 25,
+    encounterEffect : function() {item.ancientOrchid.got--},
+    unlockDescription : `🔒 Requires a <img src="img/items/ancientOrchid.png"> Ancient Orchid to enter`,
+    unlockRequirement : function() { return item.ancientOrchid.got>0 },
+    level : 90,
+    team : {
+        slot1 : pkmn.slitherWing,
+        slot1Moves : [move.stringShot.id,move.bugBuzz.id, move.signalBeam.id, move.fly.id],
+    },
+    reward : [pkmn.slitherWing]
+}
+
+areas.eventSandyShocks = {
+    rotation: 2,
+    type: `event`,
+    name: `Sandy Shocks Revival`,
+    background : `cave`,
+    icon: pkmn.sandyShocks,
+    trainer: true,
+    encounter: true,
+    difficulty: 25,
+    encounterEffect : function() {item.ancientOrchid.got--},
+    unlockDescription : `🔒 Requires a <img src="img/items/ancientOrchid.png"> Ancient Orchid to enter`,
+    unlockRequirement : function() { return item.ancientOrchid.got>0 },
+    level : 90,
+    team : {
+        slot1 : pkmn.sandyShocks,
+        slot1Moves : [move.earthquake.id,move.thunderbolt.id, move.discharge.id, move.electroWeb.id],
+    },
+    reward : [pkmn.sandyShocks]
+}
+
+areas.eventRoaringMoon = {
+    rotation: 2,
+    type: `event`,
+    name: `Roaring Moon Revival`,
+    background : `cave`,
+    icon: pkmn.roaringMoon,
+    trainer: true,
+    encounter: true,
+    difficulty: 25,
+    encounterEffect : function() {item.ancientOrchid.got-=2},
+    unlockDescription : `🔒 Requires two <img src="img/items/ancientOrchid.png"> Ancient Orchids to enter`,
+    unlockRequirement : function() { return item.ancientOrchid.got>1 },
+    level : 90,
+    team : {
+        slot1 : pkmn.roaringMoon,
+        slot1Moves : [move.dragonDance.id,move.fly.id, move.dragonRush.id, move.crunch.id],
+    },
+    reward : [pkmn.roaringMoon]
+}
+
+
+
+//rotation 3
+
+areas.exoticPond = {
+    rotation: 3,
+    type: `event`,
+    background : `sea`,
+    level : wildAreaLevel1,
+    icon: pkmn.magikarp,
     spawns: {
-        common : [pkmn.budew,pkmn.cascoon, pkmn.paras, pkmn.caterpie],
-        rare : [pkmn.sudowoodo, pkmn.chatot]
+        common : [pkmn.magikarp],
+        rare : [pkmn.magikarpKoi, pkmn.magikarpRegal, pkmn.magikarpSakura, pkmn.magikarpSkelly, pkmn.magikarpSoar, pkmn.magikarpTiger]
+    },
+    drops: {
+        common : [item.mysteryEgg],
+        rare : [item.mysticWater],
     },
 }
 
-*/
+areas.ancientTomb = {
+    rotation: 3,
+    type: `event`,
+    background : `desert`,
+    level : 90,
+    icon: pkmn.rhyperior,
+    uncatchable: true,
+    unlockDescription : `🔒 Defeat Elite Trainer Cynthia in VS to unlock`,
+    unlockRequirement : function() { return areas.vsEliteTrainerCynthia.defeated },
+    spawns: {
+        common : [pkmn.tyranitar,pkmn.rhyperior,pkmn.golem,pkmn.probopass],
+    },
+    drops: {
+        common : [item.nothing],
+        uncommon : [item.ancientKeystone]
+    },
+}
+
+areas.eventRegirock = {
+    rotation: 3,
+    type: `event`,
+    name: `Regirock Tomb`,
+    background : `cave`,
+    icon: pkmn.regirock,
+    trainer: true,
+    encounter: true,
+    difficulty: 25,
+    encounterEffect : function() {item.ancientKeystone.got--},
+    unlockDescription : `🔒 Requires a <img src="img/items/ancientKeystone.png"> Ancient Keystone to enter`,
+    unlockRequirement : function() { return item.ancientKeystone.got>0 },
+    level : 90,
+    team : {
+        slot1 : pkmn.regirock,
+        slot1Moves : [move.zapCannon.id,move.ancientPower.id, move.earthquake.id, move.stoneEdge.id],
+    },
+    reward : [pkmn.regirock]
+}
+
+areas.steelTomb = {
+    rotation: 3,
+    type: `event`,
+    background : `mountain`,
+    level : 90,
+    icon: pkmn.metagross,
+    uncatchable: true,
+    unlockDescription : `🔒 Defeat Elite Trainer Cynthia in VS to unlock`,
+    unlockRequirement : function() { return areas.vsEliteTrainerCynthia.defeated },
+    spawns: {
+        common : [pkmn.metagross,pkmn.bastiodon,pkmn.excadrill,pkmn.durant],
+    },
+    drops: {
+        common : [item.nothing],
+        uncommon : [item.steelKeystone]
+    },
+}
+
+areas.eventRegisteel = {
+    rotation: 3,
+    type: `event`,
+    name: `Registeel Tomb`,
+    background : `cave`,
+    icon: pkmn.registeel,
+    trainer: true,
+    encounter: true,
+    difficulty: 25,
+    encounterEffect : function() {item.steelKeystone.got--},
+    unlockDescription : `🔒 Requires a <img src="img/items/steelKeystone.png"> Steel Keystone to enter`,
+    unlockRequirement : function() { return item.steelKeystone.got>0 },
+    level : 90,
+    team : {
+        slot1 : pkmn.registeel,
+        slot1Moves : [move.zapCannon.id,move.ancientPower.id, move.ironHead.id, move.rockPolish.id],
+    },
+    reward : [pkmn.registeel]
+}
 
 
+areas.frozenTomb = {
+    rotation: 3,
+    type: `event`,
+    background : `snow`,
+    level : 90,
+    icon: pkmn.mamoswine,
+    uncatchable: true,
+    unlockDescription : `🔒 Defeat Elite Trainer Cynthia in VS to unlock`,
+    unlockRequirement : function() { return areas.vsEliteTrainerCynthia.defeated },
+    spawns: {
+        common : [pkmn.mamoswine,pkmn.abomasnow,pkmn.avalugg,pkmn.cryogonal],
+    },
+    drops: {
+        common : [item.nothing],
+        uncommon : [item.frozenKeystone]
+    },
+}
 
-
-
-
-
-
-
-
-
-
-
-
+areas.eventRegice = {
+    rotation: 3,
+    type: `event`,
+    name: `Regice Tomb`,
+    background : `cave`,
+    icon: pkmn.regice,
+    trainer: true,
+    encounter: true,
+    difficulty: 25,
+    encounterEffect : function() {item.frozenKeystone.got--},
+    unlockDescription : `🔒 Requires a <img src="img/items/frozenKeystone.png"> Frozen Keystone to enter`,
+    unlockRequirement : function() { return item.frozenKeystone.got>0 },
+    level : 90,
+    team : {
+        slot1 : pkmn.regice,
+        slot1Moves : [move.zapCannon.id,move.ancientPower.id, move.iceBeam.id, move.blizzard.id],
+    },
+    reward : [pkmn.regice]
+}
 
 
 

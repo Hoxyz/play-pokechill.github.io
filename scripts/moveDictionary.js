@@ -112,6 +112,14 @@ move.relicSong = {
     hitEffect: function(target) { if (rng(0.30)) moveBuff(target,'sleep') },
 }
 
+move.zapCannon = {
+    split: "special",
+    type: "electric",
+    power: 90,
+    info: function() {return `Inflicts ${tagParalysis}`},
+    hitEffect: function(target) { moveBuff(target,'paralysis') },
+}
+
 move.triAttack = {
     split: "special",
     type: "normal",
@@ -1080,7 +1088,7 @@ move.blizzard = {
     split: "special",
     rarity: 3,
     type: "ice",
-    power: 110,
+    power: 100,
     info: function() {return `10% chance to inflict ${tagFreeze}`},
     hitEffect: function(target) { if (rng(0.10)) moveBuff(target,'freeze') },
 }
