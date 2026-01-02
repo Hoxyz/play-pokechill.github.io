@@ -2803,7 +2803,6 @@ areas.vsEliteFourPoppy = {
     },
     reward : [pkmn.chikorita, item.bottleCap]
 }
-
 areas.vsEliteFourLance = {
     name: `Elite Four Lance`,
     background : `gym`,
@@ -2814,17 +2813,17 @@ areas.vsEliteFourLance = {
     level : 100,
     team : {
         slot1 : pkmn.salamence,
-        slot1Moves : [move.dragonDance.id,move.fly.id, move.fireFang.id, move.dragonRush.id],
+        slot1Moves : [move.dragonClaw.id,move.fly.id, move.fireFang.id, move.dragonRush.id],
         slot2 : pkmn.goodra,
-        slot2Moves : [move.dragonDance.id, move.dragonRush.id, move.solarBeam.id, move.acidArmor.id],
+        slot2Moves : [move.solarBeam.id, move.dragonRush.id, move.dragonClaw.id, move.acidArmor.id],
         slot3 : pkmn.haxorus,
-        slot3Moves : [move.dragonDance.id, move.dragonRush.id, move.extremeSpeed.id, move.earthquake.id],
+        slot3Moves : [move.dragonClaw.id, move.dragonRush.id, move.extremeSpeed.id, move.earthquake.id],
         slot4 : pkmn.dragonite,
-        slot4Moves : [move.dragonDance.id, move.fly.id, move.thunderPunch.id, move.dragonTail.id],
+        slot4Moves : [move.thunderWave.id, move.fly.id, move.thunderPunch.id, move.dragonTail.id],
         slot5 : pkmn.garchomp,
-        slot5Moves : [move.dragonDance.id, move.earthquake.id, move.dragonTail.id, move.ironHead.id],
+        slot5Moves : [move.dragonClaw.id, move.earthquake.id, move.dragonTail.id, move.ironHead.id],
         slot6 : pkmn.rayquaza,
-        slot6Moves : [move.dragonDance.id, move.fly.id, move.fireBlast.id, move.dragonPulse.id],
+        slot6Moves : [move.dragonDance.id, move.fly.id, move.dragonClaw.id, move.flamethrower.id],
     },
     reward : [item.luckIncense, item.goldenBottleCap]
 }
@@ -3686,5 +3685,6 @@ for (const i in areas){
         areas[i].unlockDescription = `Defeat Gym Leader Phoebe in VS to unlock`
         areas[i].unlockRequirement = function() { return areas.vsGymLeaderPhoebe.defeated }
     }
+
 
 }
