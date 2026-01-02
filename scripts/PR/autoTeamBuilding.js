@@ -3,13 +3,14 @@
 
 //auto team building, lets you build teams based on weights
 // by gwenillia
+//changes made by duck are marked with PR-EDIT
 
 
 
 
 
 
-//THIS BLOCK IS NOT FROM THE PR------------------------------------
+//PR-EDIT------------------------------------
 function openAutoTeam(){
     document.getElementById("tooltipTop").style.display = "none"
     document.getElementById("tooltipTitle").innerHTML = "Team Auto-Build"
@@ -35,7 +36,7 @@ function openAutoTeam(){
     </div>
 
     <div onClick = '
-        initAutoTeamBiasSlider()
+        setAutoTeamBiasFromPercent(document.getElementById("settings-auto-team-bias").value);
         autoBuildTeam()
         closeTooltip()
 
@@ -46,16 +47,8 @@ function openAutoTeam(){
     ` 
 
     
-    
-    initAutoTeamBiasSlider()
     document.getElementById("settings-auto-team-bias").value = 50
-    
-
-    //document.getElementById("team-name-field").addEventListener("keydown", e => {
-    //    if (e.key === "Enter") {
-    //    document.getElementById("team-name-field").blur()
-    //    }
-    //});
+  
 
     openTooltip()
 }
@@ -76,6 +69,8 @@ function setAutoTeamBiasFromPercent(pct){
   if (label) label.textContent = `Offense ${Math.round(off*100)}% / Defense ${Math.round(def*100)}%`;
 }
 
+
+/* - not needed PR-EDIT
 function initAutoTeamBiasSlider(){
   const slider = document.getElementById("settings-auto-team-bias");
   if (!slider) return
@@ -83,11 +78,12 @@ function initAutoTeamBiasSlider(){
   const currentOffPct = Math.round((window.autoTeamWeights?.offense ?? 0.6) * 100);
   slider.value = String(currentOffPct);
   setAutoTeamBiasFromPercent(currentOffPct);
+  console.log(currentOffPct)
 
   slider.addEventListener("input", (e) => {
     setAutoTeamBiasFromPercent(Number(e.target.value))
   })
-}
+}*/
 
 
 
@@ -97,6 +93,8 @@ window.autoTeamWeights = autoTeamWeights;
 
 function normalizeTypes(types) {
   if (!types) return []
+
+
 
   // already an array of strings
   if (Array.isArray(types)) {
@@ -110,6 +108,7 @@ function normalizeTypes(types) {
     const t = types.id || types.type || types.name
     return t ? [t] : []
   }
+
 
   // string
   return [types]
@@ -150,6 +149,40 @@ function buildEnemyPool(area) {
     if (!id) continue
     unique[id] = pkmn[id] || e
   }
+
+
+  //--------PR-EDIT----------
+    if (area.id == "frontierSpiralingTower") {
+
+      //dirty hack, uses pokemon with the same sdef and def to make an average
+    const map = {
+    normal: "silvally",
+    fire: "scorbunny",
+    grass: "gossifleur",
+    electric: "boltund",
+    ice: "beartic",
+    bug: "karrablast",
+    fighting: "mienfoo",
+    steel: "registeel",
+    dark: "absol",
+    ground: "trapinch",
+    fairy: "togepi",
+    ghost: "duskull",
+    psychic: "chingling",
+    flying: "chingling",
+    water: "wailord",
+    poison: "trubbish",
+    rock: "rockruff",
+    dragon: "druddigon",
+    }
+
+    const id = map[saved.currentSpiralingType]
+    if (id) unique[id] = pkmn[id]
+  }
+  //-------------------------
+
+  console.log(unique)
+
   return Object.values(unique)
 }
 

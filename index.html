@@ -128,34 +128,7 @@
 
 
 
-        <!-- PR: autoTeamBuilding.js
-        <div class="team-header-button" id="auto-team-builder" onclick="autoBuildTeam()"> 
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M10 3a7 7 0 0 0-6.938 6.063A4.5 4.5 0 0 0 5.5 18h4.75a.75.75 0 0 0 0-1.5H5.5a3 3 0 1 1 0-6A.75.75 0 0 0 6.25 9A5.5 5.5 0 0 1 17.3 8.247a.75.75 0 0 0 .63 1.087A2.5 2.5 0 0 1 20.5 11.75V12a.75.75 0 0 0 1.5 0v-.25a4 4 0 0 0-3.399-3.95A7 7 0 0 0 10 3Zm2 7.25v1.196l-.755-.754a.75.75 0 1 0-1.06 1.06l.754.755H9.75a.75.75 0 0 0 0 1.5h1.19l-.754.754a.75.75 0 1 0 1.06 1.061L12 14.317v1.19a.75.75 0 0 0 1.5 0v-1.196l.755.754a.75.75 0 1 0 1.06-1.06l-.754-.755h1.19a.75.75 0 0 0 0-1.5h-1.196l.754-.754a.75.75 0 0 0-1.06-1.061l-.755.754v-1.19a.75.75 0 0 0-1.5 0Z"/></svg>
-        Auto-build team
-        </div>
-
-        <div style="display:flex; flex-direction:column; gap:.35rem;">
-              <div>
-                <span>Auto-team bias</span>
-              </div>
-              <div>
-                <strong id="settings-auto-team-label">Offense 60% / Defense 40%</strong>
-              </div>
-
-              <input
-                id="settings-auto-team-bias"
-                type="range"
-                min="0"
-                max="100"
-                step="5"
-                value="60"
-              />
-
-              <small style="opacity:.8;">
-                Left = full defense, Right = full offense
-              </small>
-        </div>
-        -->
+      
 
 
 
@@ -211,7 +184,7 @@
                 <option value="preview30">Team 30</option>
             </select>
 
-            <svg style="margin-right: 2.5rem; flex-shrink:0" onclick="openAutoTeam()" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M13.5 1a.5.5 0 0 1 .5.5V2h.5a.5.5 0 0 1 0 1H14v.5a.5.5 0 0 1-1 0V3h-.5a.5.5 0 0 1 0-1h.5v-.5a.5.5 0 0 1 .5-.5m-10 2a.5.5 0 0 1 .5.5V4h.5a.5.5 0 1 1 0 1H4v.5a.5.5 0 1 1-1 0V5h-.5a.5.5 0 0 1 0-1H3v-.5a.5.5 0 0 1 .5-.5m9 9a.5.5 0 0 0 0-1H12v-.5a.5.5 0 0 0-1 0v.5h-.5a.5.5 0 0 0 0 1h.5v.5a.5.5 0 0 0 1 0V12zM8.73 4.563a1.914 1.914 0 0 1 2.707 2.708l-7.17 7.17a1.914 1.914 0 0 1-2.707-2.708zm-.48 1.894L2.267 12.44a.914.914 0 0 0 1.293 1.293L9.543 7.75zm2 .586l.48-.48a.914.914 0 1 0-1.293-1.292l-.48.48z"/></svg>
+            <svg style="margin-right: 2.5rem; flex-shrink:0" id="auto-build-button" onclick="openAutoTeam()" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M13.5 1a.5.5 0 0 1 .5.5V2h.5a.5.5 0 0 1 0 1H14v.5a.5.5 0 0 1-1 0V3h-.5a.5.5 0 0 1 0-1h.5v-.5a.5.5 0 0 1 .5-.5m-10 2a.5.5 0 0 1 .5.5V4h.5a.5.5 0 1 1 0 1H4v.5a.5.5 0 1 1-1 0V5h-.5a.5.5 0 0 1 0-1H3v-.5a.5.5 0 0 1 .5-.5m9 9a.5.5 0 0 0 0-1H12v-.5a.5.5 0 0 0-1 0v.5h-.5a.5.5 0 0 0 0 1h.5v.5a.5.5 0 0 0 1 0V12zM8.73 4.563a1.914 1.914 0 0 1 2.707 2.708l-7.17 7.17a1.914 1.914 0 0 1-2.707-2.708zm-.48 1.894L2.267 12.44a.914.914 0 0 0 1.293 1.293L9.543 7.75zm2 .586l.48-.48a.914.914 0 1 0-1.293-1.292l-.48.48z"/></svg>
 
 
             <svg onclick="editTeamName()" style="flex-shrink:0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m2.777 19.783l.607-4.162c.037-.272.161-.525.355-.72L15.5 3.124a1.26 1.26 0 0 1 1.19-.341a6.2 6.2 0 0 1 2.832 1.694a6.2 6.2 0 0 1 1.682 2.846a1.26 1.26 0 0 1-.341 1.19L9.089 20.275a1.26 1.26 0 0 1-.721.354l-4.161.607a1.264 1.264 0 0 1-1.43-1.454M13.275 5.364l5.363 5.363"/></svg>
