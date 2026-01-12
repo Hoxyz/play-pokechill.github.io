@@ -399,7 +399,7 @@ function switchMember(member){
 
 
     barProgressPlayer = 0
-    barPlayer.style.width = 0
+    if (barPlayer) barPlayer.style.width = 0
     exploreCombatPlayerTurn = 1
     exploreActiveMember = member
 
@@ -551,6 +551,7 @@ function setPkmnTeam(){
 
 
 }
+
 
 
 
