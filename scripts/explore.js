@@ -1086,6 +1086,7 @@ const hpBars = [
   { el: document.getElementById("exploe-wild-hp"), color: null }, // dynamic
   { el: document.getElementById("exploe-wild-hp-2"), color: "rgb(134, 141, 238)" },
   { el: document.getElementById("exploe-wild-hp-3"), color: "rgb(238, 236, 134)" },
+  { el: document.getElementById("exploe-wild-hp-4"), color: "rgb(238, 134, 134)" },
 ];
 
 let activeBars = 1;
@@ -1093,6 +1094,7 @@ let activeBars = 1;
 if (areas[saved.currentArea].encounter) {
   if (areas[saved.currentArea].difficulty == tier2difficulty) activeBars = 2;
   if (areas[saved.currentArea].difficulty == tier3difficulty) activeBars = 3;
+  if (areas[saved.currentArea].difficulty == tier4difficulty) activeBars = 4;
 }
 
 const segment = 100 / activeBars;
@@ -7534,4 +7536,3 @@ window.addEventListener('load', function() {
 
     //updateTeamExp()
 });
-
