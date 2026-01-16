@@ -112,7 +112,9 @@ function updatePreviewTeam(){
         if (currentTeam[i].pkmn == undefined) continue
         let restricedActive = 0
 
+    
     for (const activeMoves in pkmn[currentTeam[i].pkmn].moves) {
+        if (pkmn[currentTeam[i].pkmn].moves[activeMoves] == undefined) continue
         if (move[pkmn[currentTeam[i].pkmn].moves[activeMoves]].restricted) restricedActive++
     }
 
@@ -278,6 +280,7 @@ function injectPreviewTeam(){
         let restricedActive = 0
 
     for (const activeMoves in pkmn[currentTeam[i].pkmn].moves) {
+        if (pkmn[currentTeam[i].pkmn].moves[activeMoves] == undefined) continue
         if (move[pkmn[currentTeam[i].pkmn].moves[activeMoves]].restricted) restricedActive++
     }
 
