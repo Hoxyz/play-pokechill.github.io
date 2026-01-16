@@ -2869,7 +2869,7 @@ areas.eventMegaAggron = {
 
 
 areas.alphaRuins = {
-    rotation: 1,
+    rotation: 6,
     type: `event`,
     background : `cave`,
     level : wildAreaLevel1,
@@ -4721,5 +4721,6 @@ for (const i in areas){
         areas[i].unlockDescription = `Defeat Gym Leader Phoebe in VS to unlock`
         areas[i].unlockRequirement = function() { return areas.vsGymLeaderPhoebe.defeated }
     }
+
 
 }
