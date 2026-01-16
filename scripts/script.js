@@ -410,6 +410,72 @@ function learnPkmnMove(id, level, mod) {
     return undefined;
 }
 
+
+
+function learnPkmnMove(id, level, mod) {
+    let attempts = 0;
+    const MAX_ATTEMPTS = 100;
+    while (attempts++ < MAX_ATTEMPTS) {
+        const types = pkmn[id].type;
+        const knownMoves = pkmn[id].movepool || [];
+        let tier = 1;
+        if (level >= 10 && rng(0.25)) tier++;
+        if (level >= 20 && rng(0.25)) tier++;
+        if (level >= 30 && rng(0.25)) tier++;
+        if (level >= 50 && rng(0.25)) tier++;
+        if (level >= 60 && rng(0.25)) tier++;
+        tier = Math.min(tier, 3);
+        const allMoves = Object.keys(move).filter(m => {
+            const data = move[m];
+            const notKnown = mod !== "wild" ? !knownMoves.includes(m) : true;
+            return data.rarity === tier && notKnown;
+        });
+        
+        if (!allMoves.length) return undefined;
+        
+        const typeMatch = [];
+        const movesetMatch = [];
+        const allTag = [];
+        
+        allMoves.forEach(m => {
+            const data = move[m];
+            const canLearn = data.moveset.includes("all") || types.some(t => data.moveset.includes(t));
+            
+            if (!canLearn) return; 
+            
+            if (data.moveset.includes("all")) {
+                allTag.push(m);
+            } else if (types.includes(data.type)) {
+                typeMatch.push(m);
+            } else {
+                movesetMatch.push(m);
+            }
+        });
+        
+        if (level === 1) {
+            if (!typeMatch.length) continue;
+            const chosenMove = typeMatch[Math.floor(Math.random() * typeMatch.length)];
+            if (move[chosenMove].power <= 0) continue;
+            return move[chosenMove].id;
+        }
+        
+        let chosenList;
+        if (rng(0.70) && typeMatch.length) {
+            chosenList = typeMatch;
+        } else if (rng(0.50) && movesetMatch.length) {
+            chosenList = movesetMatch;
+        } else if (allTag.length) {
+            chosenList = allTag;
+        } else {
+            continue;
+        }
+        
+        const chosenMove = chosenList[Math.floor(Math.random() * chosenList.length)];
+        return move[chosenMove].id;
+    }
+    return undefined;
+}
+
 //used for the frontier 
 function learnPkmnMoveSeeded(id, level, mod, seed, exclude = []) {
 
